@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Object Detection and Segmentation</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container">
+    <h1 class="mt-5">Upload an Image for Object Detection and Segmentation</h1>
+    <form method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="file">Choose an image</label>
+            <input type="file" class="form-control-file" id="file" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Upload</button>
+    </form>
+    <div class="mt-3">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-info" role="alert">
+                    {{ messages[0] }}
+                </div>
+            {% endif %}
+        {% endwith %}
+        {% if request.args.get('original') %}
+            <h3>Original Image:</h3>
+            <img src="{{ url_for('send_file', filename=request.args.get('original')) }}" class="img-fluid">
+        {% endif %}
+        {% if request.args.get('edge') %}
+            <h3>Edge-detected Image:</h3>
+            <img src="{{ url_for('send_file', filename=request.args.get('edge')) }}" class="img-fluid">
+        {% endif %}
+        {% if request.args.get('segmented') %}
+            <h3>Segmented Image:</h3>
+            <img src="{{ url_for('send_file', filename=request.args.get('segmented')) }}" class="img-fluid">
+        {% endif %}
+        {% if request.args.get('final') %}
+            <h3>Final Image with Detections:</h3>
+            <img src="{{ url_for('send_file', filename=request.args.get('final')) }}" class="img-fluid">
+        {% endif %}
+    </div>
+</div>
+</body>
+</html>
